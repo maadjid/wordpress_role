@@ -1,0 +1,32 @@
+---
+- name: Créer ou reconfigurer complètement l'utilisateur pierre
+  hosts: all
+  become: true
+  vars:
+    password_clear: "newpass"
+    password_hash: "{{ password_clear | password_hash('sha512', 'salty') }}"
+
+  tasks:
+    - name: Supprimer l'utilisateur pierre s'il existe mal configuré
+      ansible.builtin.user:
+        name: pierre
+        state: absent
+        remove: true
+      failed_when: false
+
+    - name: Recréer l'utilisateur pierre avec un mot de passe
+      ansible.builtin.user:
+        name: pierre
+        password: "{{ password_hash }}"
+        shell: /bin/bash
+        create_home: true
+        state: present
+
+    - name: Afficher les informations de l'utilisateur pierre
+      ansible.builtin.command: getent passwd pierre
+      register: user_info
+      changed_when: false
+
+    - name: Affichage du résultat
+      ansible.builtin.debug:
+        var: user_info.stdout

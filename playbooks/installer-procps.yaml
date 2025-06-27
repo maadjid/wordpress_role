@@ -1,0 +1,9 @@
+---
+- name: Installer ps (procps) sur les clients
+  hosts: all
+  become: true
+  tasks:
+    - name: Installer procps
+      ansible.builtin.package:
+        name: procps
+        state: present

@@ -1,0 +1,20 @@
+---
+- name: Rechercher et arrêter un processus nommé "sleep"
+  hosts: client1
+  become: true
+  gather_facts: no
+
+  tasks:
+    - name: Rechercher le(s) PID(s) du processus "sleep"
+      shell: pgrep sleep
+      register: process_encours
+      ignore_errors: true
+
+    - name: Afficher les PID trouvés
+      debug:
+        var: process_encours.stdout_lines
+
+    - name: Arrêter les processus "sleep"
+      shell: kill {{ item }}
+      loop: "{{ process_encours.stdout_lines }}"
+      when: process_encours.stdout_lines is defined

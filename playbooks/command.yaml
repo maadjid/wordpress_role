@@ -1,0 +1,6 @@
+---
+- name: Utilisation du module command (devrait échouer avec pipe)
+  hosts: client1
+  tasks:
+    - name: Essayer une commande avec pipe via le module command
+      ansible.builtin.command: cat /etc/passwd | grep root

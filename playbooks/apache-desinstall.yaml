@@ -1,0 +1,11 @@
+---
+- name: Exercice 5 - Désinstallation Apache2
+  hosts: ubuntu
+  become: true
+  tasks:
+    - name: Désinstaller Apache2
+      ansible.builtin.apt:
+        name: apache2
+        state: absent
+        purge: yes
+        autoremove: yes

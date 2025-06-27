@@ -1,0 +1,21 @@
+---
+- name: Planifier un cron job sur client1
+  hosts: client1
+  become: true
+  tasks:
+    - name: Mettre à jour les paquets APT
+      apt:
+        update_cache: yes
+
+    - name: Installer cron si ce n’est pas déjà installé
+      apt:
+        name: cron
+        state: present
+
+    - name: Planifier l’exécution du script tous les lundis à 15h10
+      ansible.builtin.cron:
+        name: "Exécution hebdo de script1.sh"
+        minute: "*"
+        hour: "*"
+        weekday: "*"
+        job: "/root/script1.sh"

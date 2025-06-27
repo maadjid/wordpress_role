@@ -1,0 +1,7 @@
+---
+- name: Exécuter un script shell sur client1
+  hosts: client1
+  become: true
+  tasks:
+    - name: Exécuter le script /root/script1.sh
+      ansible.builtin.shell: /root/script1.sh

@@ -1,0 +1,11 @@
+---
+- name: Copier un fichier sur les machines distantes
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Copier le fichier /root/sdv.conf vers /tmp
+      ansible.builtin.copy:
+        src: /root/sdv.conf
+        dest: /tmp/sdv.conf
+        mode: '0644'

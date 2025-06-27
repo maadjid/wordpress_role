@@ -1,0 +1,21 @@
+---
+- name: Gérer le service apache2
+  hosts: all
+  become: true
+  vars:
+    etat_service: started  # Par défaut
+  tasks:
+
+    - name: Installer Apache selon l'OS
+      ansible.builtin.package:
+        name: "{{ apache_pkg }}"
+        state: present
+      vars:
+        apache_pkg: "{{ 'apache2' if ansible_os_family == 'Debian' else 'httpd' }}"
+
+    - name: S'assurer que le service apache est dans l'état voulu
+      ansible.builtin.service:
+        name: "{{ apache_srv }}"
+        state: "{{ etat_service }}"
+      vars:
+        apache_srv: "{{ 'apache2' if ansible_os_family == 'Debian' else 'httpd' }}"

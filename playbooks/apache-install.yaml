@@ -1,0 +1,16 @@
+---
+- name: Exercice 4 - Installation Apache2
+  hosts: ubuntu
+  become: true
+  tasks:
+    - name: Installer Apache2
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: S'assurer que Apache2 est démarré et activé
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: yes

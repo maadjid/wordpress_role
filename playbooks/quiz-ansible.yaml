@@ -1,0 +1,63 @@
+---
+- name: Déployer l'application quiz-ansible sur Rocky Linux
+  hosts: rocky
+  become: true
+
+  tasks:
+
+    - name: Mettre à jour les paquets
+      ansible.builtin.yum:
+        name: "*"
+        state: latest
+
+    - name: Supprimer curl-minimal pour éviter les conflits
+      ansible.builtin.yum:
+        name: curl-minimal
+        state: absent
+
+    - name: Installer git et curl
+      ansible.builtin.yum:
+        name:
+          - git
+          - curl
+        state: present
+
+    - name: Télécharger le script d'installation Node.js
+      ansible.builtin.get_url:
+        url: https://rpm.nodesource.com/setup_23.x
+        dest: /tmp/nodesource_setup.sh
+        mode: '0755'
+
+    - name: Exécuter le script d'installation Node.js
+      ansible.builtin.shell: bash /tmp/nodesource_setup.sh
+      args:
+        creates: /etc/yum.repos.d/nodesource-nodejs.repo
+
+    - name: Installer Node.js
+      ansible.builtin.yum:
+        name: nodejs
+        state: present
+
+    - name: Cloner le dépôt quiz-ansible dans /opt
+      ansible.builtin.git:
+        repo: https://github.com/franklin-tutorials/quiz-ansible.git
+        dest: /opt/quiz-ansible
+        version: main
+
+    - name: Installer les dépendances npm
+      ansible.builtin.shell: npm install
+      args:
+        chdir: /opt/quiz-ansible
+
+    - name: Compiler l'application
+      ansible.builtin.shell: npm run build
+      args:
+        chdir: /opt/quiz-ansible
+
+    - name: Installer 'serve' globalement
+      ansible.builtin.shell: npm install -g serve
+
+    - name: Lancer l'application avec serve -s dist en tâche de fond
+      ansible.builtin.shell: nohup serve -s dist > /dev/null 2>&1 &
+      args:
+        chdir: /opt/quiz-ansible

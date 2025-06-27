@@ -1,0 +1,12 @@
+---
+- name: Exercice 3 - Ping + Hello World
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Tester la connectivité (ping)
+      ansible.builtin.ping:
+
+    - name: Afficher "Hello World"
+      ansible.builtin.debug:
+        msg: "Hello World"

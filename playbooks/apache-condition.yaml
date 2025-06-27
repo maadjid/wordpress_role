@@ -1,0 +1,16 @@
+---
+- name: Installation conditionnelle d'Apache
+  hosts: all
+  become: yes
+  tasks:
+    - name: Installer Apache uniquement si l'hôte est de la famille Debian
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Afficher un message de confirmation si Apache a été installé
+      debug:
+        msg: "Apache2 a été installé sur une machine Debian/Ubuntu."
+      when: ansible_facts['os_family'] == "Debian"
