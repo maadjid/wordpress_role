@@ -1,5 +1,0 @@
-- name: Créer le cluster k3d s’il n’existe pas
-  shell: k3d cluster create k3d-lab --agents 1
-  become: true
-  args:
-    creates: /etc/rancher/k3s/k3s.yaml  # contournement

@@ -1,5 +1,0 @@
-- name: Test rôle k3d
-  hosts: localhost
-  become: true
-  roles:
-    - k3d

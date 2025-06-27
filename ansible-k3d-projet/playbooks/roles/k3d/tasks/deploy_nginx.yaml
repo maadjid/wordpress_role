@@ -1,8 +1,0 @@
-- name: Copier le manifest nginx
-  become: true
-  copy:
-    src: nginx.yaml
-    dest: /tmp/nginx.yaml
-
-- name: Appliquer le manifest
-  shell: kubectl apply -f /tmp/nginx.yaml

@@ -1,6 +1,0 @@
-- name: Déploiement automatisé de K3d avec NGINX
-  hosts: localhost
-  become: true
-
-  roles:
-    - k3d

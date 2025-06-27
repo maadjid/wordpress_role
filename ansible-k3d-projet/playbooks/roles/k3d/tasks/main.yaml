@@ -1,9 +1,0 @@
-- name: Installer les dépendances
-  become: true
-  import_tasks: install_dependencies.yaml
-
-- name: Créer le cluster k3d
-  import_tasks: create_cluster.yaml
-
-- name: Déployer NGINX dans le cluster
-  import_tasks: deploy_nginx.yaml
