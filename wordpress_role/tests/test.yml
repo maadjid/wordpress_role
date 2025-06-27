@@ -1,0 +1,5 @@
+- name: Test rôle WordPress
+  hosts: all
+  become: true
+  roles:
+    - wordpress_role

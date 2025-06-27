@@ -1,0 +1,36 @@
+
+---
+
+## 📄 `meta/main.yml`
+
+```yaml
+galaxy_info:
+  role_name: wordpress_role
+  author: Madjid Bennouar
+  description: Déploie automatiquement un site WordPress avec MariaDB.
+  company: ""
+  license: MIT
+
+  min_ansible_version: 2.11
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+    - name: EL
+      versions:
+        - 9
+
+  galaxy_tags:
+    - wordpress
+    - apache
+    - mariadb
+    - mysql
+    - php
+    - devops
+    - ubuntu
+    - rocky
+    - ansible
+
+dependencies: []

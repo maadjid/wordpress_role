@@ -1,0 +1,6 @@
+---
+wordpress_version: "6.5.4"
+
+db_name: wordpress_db
+db_user: wordpress
+db_password: wordpresspass

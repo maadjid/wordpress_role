@@ -1,0 +1,38 @@
+---
+
+# Ubuntu
+- name: Mettre à jour le cache APT (Ubuntu)
+  apt:
+    update_cache: yes
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Installer paquets requis (Ubuntu)
+  apt:
+    name:
+      - apache2
+      - mariadb-server
+      - php
+      - php-mysql
+      - libapache2-mod-php
+      - unzip
+      - python3-pymysql
+    state: present
+  when: ansible_facts['os_family'] == "Debian"
+
+# Rocky
+- name: Mettre à jour le cache DNF (Rocky)
+  dnf:
+    update_cache: yes
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Installer paquets requis (Rocky)
+  dnf:
+    name:
+      - httpd
+      - mariadb-server
+      - php
+      - php-mysqlnd
+      - unzip
+      - python3-PyMySQL
+    state: present
+  when: ansible_facts['os_family'] == "RedHat"

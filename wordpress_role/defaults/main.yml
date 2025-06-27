@@ -1,0 +1,19 @@
+---
+install_packages: false
+wordpress_version: "6.5.3"
+
+# Définit le service Apache en fonction de l'OS (Ubuntu ou Rocky Linux)
+apache_service: "{{ 'apache2' if ansible_facts['os_family'] == 'Debian' else 'httpd' }}"
+web_user: "{{ 'www-data' if ansible_os_family == 'Debian' else 'apache' }}"
+
+# Paquets PHP nécessaires à WordPress
+php_packages: >
+  {{ ['php', 'php-mysql'] if ansible_facts['os_family'] == 'Debian'
+     else ['php', 'php-mysqlnd'] }}
+
+# Autres variables par défaut que tu pourrais avoir besoin d’ajouter :
+mariadb_root_password: "rootpass"
+wordpress_db_name: "wordpress"
+wordpress_db_user: "wpuser"
+wordpress_db_password: "wppass"
+wordpress_site_url: "http://localhost"
